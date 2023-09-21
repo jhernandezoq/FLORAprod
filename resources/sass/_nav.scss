@@ -1,0 +1,24 @@
+nav{
+	background-color: #90d3c1 !important;
+}
+
+.nav-area{
+	.navbar-brand{
+		font-weight: 300;
+		font-size: 40px;
+		font-family: $font-brand;
+		letter-spacing: 2px;
+		color: #483820;
+	}
+
+	.nav-link{
+		font-size:14px;
+		font-family: $font-link;
+		font-weight: 500;
+		color: #ffffff;
+	}
+
+	.orange{
+		color: #ff701f;
+	}
+}

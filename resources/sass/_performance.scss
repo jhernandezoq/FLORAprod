@@ -1,0 +1,27 @@
+.performance-area{
+	.title
+	{
+		font-family: $font-title;
+		font-size: 22px;
+		font-weight: 900;
+		color:$color-title;
+		margin-top: 20px;
+	}
+
+	.orange{
+		color: $orange;
+	}
+
+	.alert-heading{
+		font-weight: 900;
+	}
+
+	.question-text{
+		font-size: 18px;
+	}
+
+	.response-value{
+		font-size: 22px;
+		font-weight: 900;
+	}
+}
