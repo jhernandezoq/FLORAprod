@@ -6909,9 +6909,9 @@ $count=count($datos);
                                 ORDER BY DATE_FORMAT(I.created_at, "%Y-%m-%d") ASC');
       $countInvoices=count($invoices);
 
-      $suppliers = Supplier::where('active','=',1)
-      ->orderby('name','asc')
-      ->get();
+      $suppliers = Supplier::select('suppliers.id', 'suppliers.nit', 'suppliers.name')
+          ->where('active', 1)
+          ->get();
 
       return view('invoice.faccosto', [
         'modules' => $modules,
@@ -7235,8 +7235,8 @@ public function fcompras(Request $request){
                                 ORDER BY DATE_FORMAT(I.created_at, "%Y-%m-%d") asc;',[$user->id,62]);
     $countInvoices=count($invoices);
 
-    $suppliers = Supplier::where('active','=',1)
-    ->orderby('name','asc')
+    $suppliers = Supplier::select('suppliers.id', 'suppliers.nit', 'suppliers.name')
+    ->where('active', 1)
     ->get();
 
     return view('invoice.faccosto', [

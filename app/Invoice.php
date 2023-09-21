@@ -47,14 +47,27 @@ class Invoice extends Model
 
     public function getPendingInvoices()
     {
-        $invoices = DB::select('SELECT I.id as invoice_id,S.name AS supplier, I.revision as revision,I.number, I.due_date, I.subtotal        ,I.total, I.iva,I.priority,I.file,I.due_date,
-                    (SELECT U.name FROM invoice_logg L
-                    INNER JOIN users U ON U.id = L.next_user_id
-                    WHERE invoice_id = I.id ORDER BY L.created_at DESC LIMIT 1) user
-                    FROM invoices I
-                    INNER JOIN suppliers S ON S.id = supplier_id
-                    WHERE (SELECT STATE_ID FROM invoice_logg WHERE invoice_id = I.id ORDER BY   created_at DESC LIMIT 1) IN (1,3,4,5)
-                    ORDER BY I.due_date asc');
+        $invoices = Invoice::select(
+            'invoices.id as invoice_id',
+            'suppliers.name as supplier',
+            'invoices.revision',
+            'invoices.number',
+            'invoices.due_date',
+            'invoices.subtotal',
+            'invoices.total',
+            'invoices.iva',
+            'invoices.priority',
+            'invoices.file',
+            'invoices.due_date',
+            DB::raw('(SELECT users.name FROM invoice_logg L INNER JOIN users ON users.id = L.next_user_id WHERE L.invoice_id = invoices.id ORDER BY L.created_at DESC LIMIT 1) as user')
+        )
+        ->join('suppliers', 'suppliers.id', '=', 'invoices.supplier_id')
+        ->whereIn(
+            DB::raw('(SELECT STATE_ID FROM invoice_logg WHERE invoice_id = invoices.id ORDER BY created_at DESC LIMIT 1)'),
+            [1, 3, 4, 5]
+        )
+        ->orderBy('invoices.due_date', 'asc')
+        ->get();          
         return $invoices;
     }
 
