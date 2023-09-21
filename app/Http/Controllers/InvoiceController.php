@@ -85,9 +85,9 @@ class InvoiceController extends Controller
 
         $cuentas = DB::SELECT('SELECT id AS id, Cuenta AS cuenta FROM cuentas_cecos');
 
-        $suppliers = Supplier::where('active','=',1)
-              ->orderby('name','asc')
-              ->get();
+        $suppliers = Supplier::select('suppliers.id', 'suppliers.nit', 'suppliers.name')
+        ->where('active', 1)
+        ->get();    
 
         $day = intval(date("j"));
 
@@ -1215,10 +1215,9 @@ class InvoiceController extends Controller
     $application = new Application();
     $modules = $application->getModules($user->id,4);
 
-    $suppliers = Supplier::where('active','=',1)
-                    ->orderby('name','asc')
-                    ->get(); 
- 
+    $suppliers = Supplier::select('suppliers.id', 'suppliers.nit', 'suppliers.name')
+                          ->where('active', 1)
+                          ->get();
 
    $directores=DB::SELECT("SELECT id AS id,
                                   name AS name,
@@ -6841,42 +6840,27 @@ $count=count($datos);
   }
 
 
-  public function unassigned(Request $request){
-
+  public function unassigned(Request $request) {
     $user = Auth::user();
-    $application = new Application();
-    $modules = $application->getModules($user->id,4);
-
-    $invoices=DB::SELECT('SELECT i.id AS id, 
-                                i.number AS number,
-                                s.name AS supplier,
-                                i.create_date AS fecha_creacion,
-                                i.due_date AS due_date,
-                                i.subtotal AS subtotal,
-                                i.iva AS iva,
-                                i.total AS total,
-                                i.concept AS concept,
-                                i.file AS file
-                          FROM invoices i
-                          INNER JOIN suppliers s
-                          ON s.id=i.supplier_id
-                          WHERE i.flow_id=?',[60]);
-
-    $countInvoices=count($invoices);
-    $suppliers = Supplier::where('active','=',1)
-    ->orderby('name','asc')
+    $modules = (new Application())->getModules($user->id, 4);
+    $invoices = DB::table('invoices as i')
+        ->select('i.id', 'i.number', 's.name as supplier', 'i.create_date as fecha_creacion', 'i.due_date', 'i.subtotal', 'i.iva', 'i.total', 'i.concept', 'i.file')
+        ->join('suppliers as s', 's.id', '=', 'i.supplier_id')
+        ->where('i.flow_id', 60)
+        ->get();
+    $countInvoices = $invoices->count();
+    $suppliers = Supplier::select('suppliers.id', 'suppliers.nit', 'suppliers.name')
+    ->where('active', 1)
     ->get();
+    return view('invoice.unassignedfiles', [
+        'modules' => $modules,
+        'user' => $user,
+        'invoices' => $invoices,
+        'countInvoices' => $countInvoices,
+        'suppliers' => $suppliers
+    ]);
+}
 
-return view('invoice.unassignedfiles', [
-  'modules' => $modules,
-  'user' => $user,
-  'invoices' => $invoices,
-  'countInvoices' =>$countInvoices,
-  'suppliers'=>$suppliers
-]);  
-
-    
-  }
 
 
   public function takeinvoice(Request $request){
