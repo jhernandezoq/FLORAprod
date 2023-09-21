@@ -13,7 +13,7 @@
                 <div class="form-group col-sm-6"><br>
                    <label for="user">Proveedor:</label>
                    <select class="form-control" id="supplier_nit" name="supplier_nit">
-                    <option value=a"0" selected="selected">Seleccione...</option>
+                    <option value="0" selected="selected">Seleccione...</option>
                      @foreach($suppliers as $supplier)
                       <option value="{{$supplier->id}}">{{$supplier->nit}} - {{$supplier->name}}</option>
                     @endforeach
