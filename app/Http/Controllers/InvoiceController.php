@@ -1231,8 +1231,9 @@ class InvoiceController extends Controller
                                OR (id) = ?
                                OR (id) = ?
                                OR (id) = ?
+                               OR (id) = ?
                                OR (id) = ?)
-                               AND active = ?",['DIRECTOR','DIRECTORA',6,239,226,275,315,2169,69,1]);
+                               AND active = ?",['DIRECTOR','DIRECTORA',6,239,226,275,315,2169,69,2147,1]);
 
 
     return view('anticipos/anticipos',['modules' => $modules,'user' => $user, 'suppliers'=>$suppliers,'directores'=>$directores]);
@@ -4949,8 +4950,9 @@ public function gestionarfinalizacionlegalizacion(Request $request){
                                OR (id) = ?
                                OR (id) = ?
                                OR (id) = ?
+                               OR (id) = ?
                                OR (id) = ?)
-                               AND active = ?",['DIRECTOR','DIRECTORA',6,239,226,315,2169,69,1]);
+                               AND active = ?",['DIRECTOR','DIRECTORA',6,239,226,315,2169,69,2147,1]);
 
     $validacion=0;
 
