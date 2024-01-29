@@ -6648,6 +6648,7 @@ $count=count($datos);
     $actualizacion_factura=DB::INSERT("INSERT INTO invoice_logg (invoice_id,user_id,state_id,description,next_user_id,created_at, updated_at)
                                        VALUES (?,?,?,?,?,?,?)",[$id_factura,$id_user,5,$description_rechazo,$original_user[0]->user_id,$fecha,$fecha]);
 
+    $actualizacion_flow=DB::UPDATE('UPDATE invoices SET flow_id = ? WHERE id = ?',[60, $id_factura]);
 
     $actualizacion_distributions=DB::UPDATE('UPDATE distributions SET active = ? WHERE invoice_id = ?', [0, $id_factura]);
 
