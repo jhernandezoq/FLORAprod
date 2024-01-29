@@ -6643,13 +6643,14 @@ $count=count($datos);
   
     $original_user = DB::SELECT("SELECT user_id AS user_id
                                   FROM invoice_logg
-                                  WHERE id=(SELECT min(id) FROM invoice_logg WHERE invoice_id=?)",[$id_factura]);
+                                  WHERE id=(SELECT min(id) FROM invoice_logg WHERE invoice_id=? AND user_id <> ?)",[$id_factura,2198]);
   
     $actualizacion_factura=DB::INSERT("INSERT INTO invoice_logg (invoice_id,user_id,state_id,description,next_user_id,created_at, updated_at)
                                        VALUES (?,?,?,?,?,?,?)",[$id_factura,$id_user,5,$description_rechazo,$original_user[0]->user_id,$fecha,$fecha]);
-  
-  
-  
+
+
+    $actualizacion_distributions=DB::UPDATE('UPDATE distributions SET active = ? WHERE invoice_id = ?', [0, $id_factura]);
+
   $date = date ( 'Y-m-d' );
   $timestamp = strtotime($date);
 
