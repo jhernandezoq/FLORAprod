@@ -95,6 +95,9 @@ class SendMail extends Mailable
             case 'devolucionupdate':
                return $this->subject('Datos de devolución actualizados')->view('mail.notificationDevolucionActualizacion');
                   break;
+            case 'InvoiceReject':
+               return $this->subject('Factura::'.$this->info[0]." " . $this->info[3])->view('mail.notificationEmailInvoiceReject');
+                  break;
             default:
                # code...
                break;

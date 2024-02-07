@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\NofiticationInvoiceMail;
 use App\Mail\NofiticationInvoiceMailCost;
+use App\Mail\NotificationInvioceMailReject;
 use App\Invoice;
 use App\Flow;
 use App\Supplier;
@@ -6449,7 +6450,7 @@ $count=count($datos);
       $assignmentuser = $leader[0]->name;
       $Type = 'devolucionespago';
       $MailSend= $leader[0]->email;
-  
+  //
       $request->session()->put('assignmentuser', $leader[0]->name);
   
       
@@ -6652,6 +6653,24 @@ $count=count($datos);
 
     $actualizacion_distributions=DB::UPDATE('UPDATE distributions SET active = ? WHERE invoice_id = ?', [0, $id_factura]);
 
+    $data=DB::SELECT("SELECT A.invoice_id as ID, C.number AS Factura, B.id,B.name AS Nombre, B.email AS Correo, D.name AS NombreProveedor,C.total, C.subtotal, C.iva, C.currency, C.due_date AS Vencimiento
+                              FROM invoice_logg A
+                              JOIN users B 
+                              ON A.user_id = B.id
+                              JOIN invoices C
+                              ON A.invoice_id = C.Id
+                              JOIN suppliers D 
+                              ON C.supplier_id = D.id
+                              WHERE A.id=(SELECT min(id) FROM invoice_logg WHERE invoice_id= ? AND user_id <> ?)", [$id_factura, 2198]);
+
+    $MailSend= $data[0]->Correo;
+    $type = 'InvoiceReject';  
+    $datosCorreo=[$data[0]->Factura, $type ,$data[0]->Nombre, $data[0]->NombreProveedor, $data[0]->total, $data[0]->subtotal, $data[0]->iva, $data[0]->currency, $data[0]->Vencimiento, $description_rechazo];
+
+    if ($MailSend != NULL) {
+      Mail::to($MailSend)->send(new SendMail($datosCorreo));
+    }
+    
   $date = date ( 'Y-m-d' );
   $timestamp = strtotime($date);
 
