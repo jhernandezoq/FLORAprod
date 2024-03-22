@@ -360,7 +360,7 @@ class InvoiceController extends Controller
 
                   }
                   else{
-                  $validador_contable_aprueba = 2030;
+                  $validador_contable_aprueba = 2327;
                   $approvers = Approver::where('user_id','=', $validador_contable_aprueba )
                                         ->where('flow_id','=',$flow->id)
                                         ->where('active','=',1)
@@ -1233,8 +1233,9 @@ class InvoiceController extends Controller
                                OR (id) = ?
                                OR (id) = ?
                                OR (id) = ?
+                               OR (id) = ?
                                OR (id) = ?)
-                               AND active = ?",['DIRECTOR','DIRECTORA',6,239,226,275,315,2169,69,2147,1]);
+                               AND active = ?",['DIRECTOR','DIRECTORA',6,239,226,275,315,2169,69,2147,3007,1]);
 
 
     return view('anticipos/anticipos',['modules' => $modules,'user' => $user, 'suppliers'=>$suppliers,'directores'=>$directores]);
@@ -1430,8 +1431,11 @@ class InvoiceController extends Controller
                                OR (id) = ?
                                OR (id) = ?
                                OR (id) = ?
+                               OR (id) = ?
+                               OR (id) = ?
+                               OR (id) = ?
                                OR (id) = ?)
-                               AND active = ?",['DIRECTOR','DIRECTORA',6,239,226,275,315,2169,1]);
+                               AND active = ?",['DIRECTOR','DIRECTORA',6,239,226,275,315,2169,69,2147,3007,1]);
 
                          return view('anticipos/anticiposerror',['modules' => $modules,'user' => $user, 'suppliers'=>$suppliers,'directores'=>$directores]);
 
@@ -3561,8 +3565,11 @@ class InvoiceController extends Controller
                                OR (id) = ?
                                OR (id) = ?
                                OR (id) = ?
+                               OR (id) = ?
+                               OR (id) = ?
+                               OR (id) = ?
                                OR (id) = ?)
-                               AND active = ?",['DIRECTOR','DIRECTORA',6,239,226,275,315,2169,1]);
+                               AND active = ?",['DIRECTOR','DIRECTORA',6,239,226,275,315,2169,69,2147,3007,1]);
 
 
 
@@ -4952,8 +4959,10 @@ public function gestionarfinalizacionlegalizacion(Request $request){
                                OR (id) = ?
                                OR (id) = ?
                                OR (id) = ?
+                               OR (id) = ?
+                               OR (id) = ?
                                OR (id) = ?)
-                               AND active = ?",['DIRECTOR','DIRECTORA',6,239,226,315,2169,69,2147,1]);
+                               AND active = ?",['DIRECTOR','DIRECTORA',6,239,226,275,315,2169,69,2147,3007,1]);
 
     $validacion=0;
 
@@ -5228,7 +5237,7 @@ public function aceptargastos(Request $request){
     $rows_permissions_pagos = DB::SELECT('SELECT id_user FROM permission  
     WHERE function_id = ' . $id_function_pago_legalizacion );
 
-    $validador_contable = 2030;
+    $validador_contable = 2327;
 
     $validador_cartera = $rows_permissions_pagos[ array_rand($rows_permissions_pagos) ]->id_user;
 
@@ -5348,7 +5357,7 @@ public function aceptargastosuser(Request $request){
     $rows_permissions_pagos = DB::SELECT('SELECT id_user FROM permission  
     WHERE function_id = ' . $id_function_pago_legalizacion );
 
-    $validador_contable = 2030;
+    $validador_contable = 2327;
 
     $validador_cartera = $rows_permissions_pagos[ array_rand($rows_permissions_pagos) ]->id_user;
 

@@ -1535,7 +1535,7 @@ public function lookinginvoicesself(Request $request){
 		        $egresos=DB::SELECT("SELECT id AS id,
 									egress as egreso
 							FROM invoices
-							WHERE YEAR(create_date) >= '2022' AND
+							WHERE YEAR(create_date) >= '2024' AND
 							egress IS NOT NULL AND
 							egress <> 'n/a'");
 
@@ -1554,7 +1554,7 @@ public function lookinginvoicesself(Request $request){
 								FROM  suppliers s
 								INNER JOIN invoices i
 								ON i.supplier_id=s.id
-								WHERE YEAR(i.create_date) >= '2022'
+								WHERE YEAR(i.create_date) >= '2024'
 								GROUP BY s.id");
 
         // $invoices=DB::SELECT("SELECT  i.id AS id,
@@ -1571,7 +1571,7 @@ public function lookinginvoicesself(Request $request){
         	                     FROM  invoices i
         	                     LEFT JOIN companies c
         	                     ON c.id=i.company
-								 WHERE year(i.created_at) >= '2022'");
+								 WHERE year(i.created_at) >= '2024'");
 
         // $radication_time=DB::SELECT("SELECT  created_at AS radication_time,
         // 	                                 id AS id
@@ -1581,7 +1581,7 @@ public function lookinginvoicesself(Request $request){
 		        $radication_time=DB::SELECT("SELECT  created_at AS radication_time,
         	                                 id AS id
         	                     FROM  invoices
-								 WHERE year(created_at) >= '2022'");
+								 WHERE year(created_at) >= '2024'");
 
         $users=DB::SELECT("SELECT u.id AS id,
                                   u.name AS name
@@ -1670,7 +1670,7 @@ $datos_tabla_flujo=DB::SELECT("SELECT   i.id AS id,
 										LEFT JOIN companies c
 										ON c.id=i.company
 										WHERE i.created_at BETWEEN (select date_add(CURDATE(), interval -90 day)) AND CURDATE() AND
-										YEAR(i.create_date) >= '2022'
+										YEAR(i.create_date) >= '2024'
 										ORDER BY i.created_at DESC");
 
 // $datos_tabla_flujo_completo=DB::SELECT("SELECT   i.id AS id,
@@ -1748,7 +1748,7 @@ $datos_tabla_flujo_completo=DB::SELECT("SELECT   i.id AS id,
 										LEFT JOIN companies c
 										ON c.id=i.company
 										WHERE i.created_at BETWEEN (select date_add(CURDATE(), interval -90 day)) AND CURDATE() 
-										AND year(i.created_at) >= '2022'
+										AND year(i.created_at) >= '2024'
 										ORDER BY i.created_at DESC");
 						
 						// $datos_tabla=DB::SELECT("SELECT   i.id AS id,
@@ -1825,7 +1825,7 @@ $datos_tabla_flujo_completo=DB::SELECT("SELECT   i.id AS id,
 						ON st.id=l.state_id
 						LEFT JOIN companies c
 						ON c.id=i.company
-						WHERE year(i.created_at) >= '2022'
+						WHERE year(i.created_at) >= '2024'
 						ORDER BY i.created_at DESC
 						");		
 
@@ -2370,7 +2370,7 @@ public function load_data_invoices_report(Request $request){
 												ON st.id=l.state_id
 	                                            LEFT JOIN companies c
 	                                            ON c.id=i.company
-												WHERE year(i.created_at) >= '2022'";
+												WHERE year(i.created_at) >= '2024'";
             if ($request->supplier != 0) {
             $information_datas .= 'AND i.supplier_id=? ';
             }
@@ -2420,7 +2420,7 @@ public function load_data_invoices_report(Request $request){
 	                                            LEFT JOIN companies c
 	                                            ON c.id=i.company												
 												WHERE DATE_FORMAT(i.created_at,'%Y-%m-%d') BETWEEN ? AND ?
-												AND year(i.created_at) >= '2022' 
+												AND year(i.created_at) >= '2024' 
 												ORDER BY i.created_at DESC",[$request->fecha_inicial,$request->fecha_final]);
 
             }
@@ -2433,7 +2433,7 @@ public function load_data_invoices_report(Request $request){
             $id_invoices =DB::SELECT("SELECT invoice_id
                                       FROM invoice_logg
                                       WHERE user_id = ? AND
-									  year(created_at) >= '2022'
+									  year(created_at) >= '2024'
 									  GROUP BY invoice_id",[$request->user]);
 
             foreach ($id_invoices as $key ) {
@@ -2477,7 +2477,7 @@ public function load_data_invoices_report(Request $request){
 	                                            LEFT JOIN companies c
 	                                            ON c.id=i.company												
 												WHERE i.id IN ".$ids_string." AND
-												year(i.created_at) >= '2022'
+												year(i.created_at) >= '2024'
 												ORDER BY i.created_at DESC");
             }
 
@@ -2509,7 +2509,7 @@ public function load_data_invoices_report(Request $request){
         $egresos=DB::SELECT("SELECT id AS id,
 							egress as egreso
 							FROM invoices
-							WHERE YEAR(create_date) >= '2022' AND
+							WHERE YEAR(create_date) >= '2024' AND
 							egress IS NOT NULL AND
 							egress <> 'n/a'");
 
@@ -2521,7 +2521,7 @@ public function load_data_invoices_report(Request $request){
 										FROM  suppliers s
 										INNER JOIN invoices i
 										ON i.supplier_id=s.id
-										WHERE  YEAR(i.create_date) >= '2022'
+										WHERE  YEAR(i.create_date) >= '2024'
 										GROUP BY s.id");
 
 		$invoices=DB::SELECT("SELECT  i.id AS id,
@@ -2530,12 +2530,12 @@ public function load_data_invoices_report(Request $request){
 									FROM  invoices i
 									LEFT JOIN companies c
 									ON c.id=i.company
-									WHERE year(i.created_at) >= '2022'");
+									WHERE year(i.created_at) >= '2024'");
 
 		$radication_time=DB::SELECT("SELECT  created_at AS radication_time,
 											id AS id
 											FROM  invoices
-											WHERE year(created_at) >= '2022'");
+											WHERE year(created_at) >= '2024'");
 
 		$users=DB::SELECT("SELECT u.id AS id,
 								u.name AS name

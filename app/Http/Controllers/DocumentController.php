@@ -142,7 +142,7 @@ class DocumentController extends Controller
         catch (\Throwable $th) {
             $json = json_encode([
                 'error' => true,
-                'data' => [],
+                'data' => $dataJson,
                 'message' => 'Error en el servidor: '.$th->getMessage().
                 '<br />Línea: '.$th->getLine(),
             ]);

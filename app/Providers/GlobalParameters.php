@@ -20,7 +20,7 @@ $globalParameters = [
     ],
 
     'validador_contable_aprueba' => 1650,
-    'validador_contable_aprueba_final' => 2030,
+    'validador_contable_aprueba_final' => 2327,
     'entorno_doc_equivalente' => 2,
     
 ]
